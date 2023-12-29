@@ -10,7 +10,6 @@ const cyberTrends = async (req, res) => {
       `https://newsapi.org/v2/everything?q=${query}&apiKey=${NEWS_API_KEY}&page=${page}&pageSize=${pageSize}`
     );
 
-    console.log(response.data);
 
     const newsData = response.data;
     res.json(newsData);
