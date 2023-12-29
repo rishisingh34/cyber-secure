@@ -9,11 +9,14 @@ const auth_controller = {
       const { email , name } = req.body;
       const otp = Math.floor(100000 + Math.random() * 900000);
 
-      const user = new User({
-        name , 
-        email 
-      });
-      await user.save();
+      const existingUser = await User.findOne({ email }); 
+      if(!existingUser) {
+        const user = new User({
+          name,
+          email,
+        });
+        await user.save();
+      }      
 
       const OTP = new Otp({
         email ,
@@ -24,7 +27,7 @@ const auth_controller = {
 
       sendOtpMail(email, otp);
 
-      res.status(201).json({ message: "User created successfully" });
+      res.status(201).json({ message: "Otp Sent successfully" });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
