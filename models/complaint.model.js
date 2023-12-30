@@ -12,7 +12,7 @@ const complaintSchema = new mongoose.Schema({
     type : String ,
   }, 
   date : {
-    type : Date ,
+    type : String ,
   } ,
   time : {
     type : String ,
