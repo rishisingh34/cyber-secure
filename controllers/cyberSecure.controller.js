@@ -4,11 +4,12 @@ const crypto = require('crypto');
 const complaintRegister = {
   incidentDetails : async (req, res) => {
     try {
-      const { category , subcategory , date , time , delayReason , additionalInfo } = req.body;
+      const { category , subcategory , date , time , delayReason , additionalInfo } = req.body;      
 
-      const acknowledgementNumber = crypto.randomBytes(20).toString("hex");
+      const acknowledgementNumber = crypto.randomBytes(8).toString("hex").toUpperCase();
 
       const complaintData = new Complaint({
+        user : req.user.id ,
         acknowledgementNumber ,
         category ,
         subcategory ,

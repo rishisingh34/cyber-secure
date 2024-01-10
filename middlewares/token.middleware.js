@@ -21,7 +21,6 @@ const Token = {
   verifyAccessToken: async (req, res, next) => {
     try {
       const token = req.cookies.accessToken;
-
       if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
       }
@@ -29,9 +28,11 @@ const Token = {
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
       req.user = await User.findById(decoded.aud).select("-passwd");
+      
 
       next();
     } catch (err) {
+      console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
   },

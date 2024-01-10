@@ -1,5 +1,4 @@
 const axios = require("axios");
-const cheerio = require("cheerio");
 const { NEWS_API_KEY } = require("../config/env.config");
 
 const cyberTrends = async (req, res) => {
@@ -17,5 +16,6 @@ const cyberTrends = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
+  
 };
 module.exports = cyberTrends;

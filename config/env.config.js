@@ -10,4 +10,5 @@ module.exports = {
   EMAIL : process.env.EMAIL,
   PASS : process.env.PASS,
   ACCESS_TOKEN_SECRET : process.env.ACCESS_TOKEN_SECRET,
+  RAPID_API_KEY : process.env.RAPID_API_KEY,
 };
