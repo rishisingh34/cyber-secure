@@ -7,7 +7,7 @@ const auth_controller = {
   register: async (req, res) => {
     try {
       const { email , name } = req.body;
-      const otp = Math.floor(100000 + Math.random() * 900000);
+      const otp = Math.floor(1000 + Math.random() * 9000);
 
       const existingUser = await User.findOne({ email }); 
       if(!existingUser) {
