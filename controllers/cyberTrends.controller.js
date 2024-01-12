@@ -28,7 +28,7 @@ const cyberCrimeInfo = {
         return res.status(404).json({message : "Category not found"}) ;
       }
 
-      res.status(200).json({cyberCrimeCategories}) ;      
+      res.status(200).json({ Crime : cyberCrimeCategories}) ;      
 
     } catch (err){
       console.error(err);
