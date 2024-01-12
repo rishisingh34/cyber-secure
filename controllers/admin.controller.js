@@ -1,4 +1,5 @@
 const Admin =  require("../models/admin.model");
+const Complaint = require("../models/complaint.model");
 const Otp = require("../models/otp.model");
 const { sendOtpMail } = require("../utils/mailer.util");
 const Token = require("../middlewares/token.middleware");
@@ -61,6 +62,19 @@ const admin  = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+  getComplaints : async (req, res) => {
+    try {
+      const complaints = await Complaint.find({}) ;
+      if(!complaints){
+        return res.status(404).json({message : "Complaints not found"}) ;
+      }
+
+      return res.status(200).json({complaints : complaints}) ;
+    } catch (err){
+      console.error(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 };
 
 module.exports = admin ;
