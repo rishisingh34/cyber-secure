@@ -52,7 +52,7 @@ const complaintSchema = new mongoose.Schema({
   nearestPoliceStation : {
     type : String ,
   }, 
-  idImageUrl : {
+  nationalIdImageUrl : {
     type : String 
   } ,
   

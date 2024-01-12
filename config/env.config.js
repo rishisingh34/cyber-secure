@@ -11,4 +11,8 @@ module.exports = {
   PASS : process.env.PASS,
   ACCESS_TOKEN_SECRET : process.env.ACCESS_TOKEN_SECRET,
   RAPID_API_KEY : process.env.RAPID_API_KEY,
+  CLOUD_API_SECRET : process.env.CLOUD_API_SECRET,
+  CLOUD_NAME : process.env.CLOUD_NAME,
+  CLOUD_API_KEY : process.env.CLOUD_API_KEY,
 };
+
