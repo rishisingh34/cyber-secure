@@ -65,6 +65,8 @@ const admin  = {
   getComplaints : async (req, res) => {
     try {
       const complaints = await Complaint.find({}) ;
+      
+      
       if(!complaints){
         return res.status(404).json({message : "Complaints not found"}) ;
       }

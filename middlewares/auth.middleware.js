@@ -1,26 +1,18 @@
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/admin.model"); 
+const {ACCESS_TOKEN_SECRET} = require('../config/env.config') ;
 
 const auth = async (req, res, next) => {
   try {
+    
     const token = req.header("Authorization").replace("Bearer ", "");
     if (!token) {
       return res.status(401).json({ message: "Unauthorized - Missing token" });
     }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const admin = await Admin.findOne({
-      _id: decoded._id,
-      "tokens.token": token,
-    });
-
-    if (!admin) {
-      throw new Error();
-    }
-
-    req.admin = admin;
+    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);   
+    req.admin = decoded.aud;
     next();
   } catch (error) {
+    console.error(error);
     res.status(401).json({ message: "Unauthorized - Invalid token" });
   }
 };
