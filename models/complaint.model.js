@@ -54,8 +54,10 @@ const complaintSchema = new mongoose.Schema({
   }, 
   nationalIdImageUrl : {
     type : String 
-  } ,
-  
+  },
+  importantDocumentsUrl : {
+    type : String ,    
+  }
 });
 
 module.exports = mongoose.model('Complaint', complaintSchema) ;
