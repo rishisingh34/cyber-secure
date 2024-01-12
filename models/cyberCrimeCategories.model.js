@@ -12,6 +12,9 @@ const cyberCrimeCategoriesSchema = new mongoose.Schema({
   youtubeVideoUrl : {
     type : String ,
   },
+  protection : {
+    type : String ,     
+  }
 });
 
 module.exports = mongoose.model('CyberCrimeCategories', cyberCrimeCategoriesSchema) ;
