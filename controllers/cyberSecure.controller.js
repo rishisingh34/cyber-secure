@@ -20,7 +20,7 @@ const complaintRegister = {
         additionalInfo ,
       });
       await complaintData.save();
-      res.status(201).json({ message: "Complaint Registered successfully" });
+      res.status(201).json({ message: "Complaint Registered successfully" , acknowledgementNumber : "Your acknowledgement number is " + acknowledgementNumber});
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
