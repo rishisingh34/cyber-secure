@@ -5,7 +5,8 @@ const connectDB = require('./config/db.config');
 const trendsRoutes = require('./routes/cyber_secure.route') ;
 const authRoutes = require('./routes/auth.route') ;
 const adminRoutes = require('./routes/admin.route') ;
-const handleCors = require('./config/cors.config') ;
+// const handleCors = require('./config/cors.config') ;
+const cors = require('cors');
 const cookieParser = require('cookie-parser') ;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true })) ;
 app.use('/v1', trendsRoutes) ;
 app.use('/v1/auth', authRoutes) ;
 app.use('/v1/admin', adminRoutes) ;
-app.use(handleCors) ;
+app.use(cors()) ;
 app.use('/gemini', async (req, res) => {
   try {
     
