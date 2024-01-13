@@ -20,12 +20,14 @@ const Token = {
   },
   verifyAccessToken: async (req, res, next) => {
     try {
-      const token = req.cookies.accessToken;
+      const token = req.header("Authorization").replace("Bearer ", "");
       if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res
+          .status(401)
+          .json({ message: "Unauthorized - Missing token" });
       }
 
-      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);
 
       req.user = await User.findById(decoded.aud).select("-passwd");
       

@@ -1,13 +1,13 @@
-const Admin =  require("../models/admin.model");
+const Admin = require("../models/admin.model");
 const Complaint = require("../models/complaint.model");
 const Otp = require("../models/otp.model");
 const { sendOtpMail } = require("../utils/mailer.util");
 const Token = require("../middlewares/token.middleware");
 
-const admin  = {
+const admin = {
   login: async (req, res) => {
     try {
-      const {name , designation , identificationNumber , issuedDate} = req.body;
+      const { name, designation, identificationNumber, issuedDate } = req.body;
 
       const admin = await Admin.findOne({ identificationNumber });
 
@@ -15,8 +15,8 @@ const admin  = {
         return res.status(404).json({ message: "Admin not found" });
       }
 
-      if( name != admin.name || designation != admin.designation){
-        return res.status(400).json({message : "Invalid Credentials"}) ;
+      if (name != admin.name || designation != admin.designation) {
+        return res.status(400).json({ message: "Invalid Credentials" });
       }
 
       const email = admin.email;
@@ -51,32 +51,31 @@ const admin  = {
       const admin = await Admin.findOne({ email });
       const accessToken = await Token.signAccessToken(admin.id);
 
-      await OTP.deleteOne({ email });      
+      await OTP.deleteOne({ email });
 
       return res.status(200).json({
-        message : "User verified successfully" ,
-        accessToken : accessToken
+        message: "User verified successfully",
+        accessToken: accessToken,
       });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
-  getComplaints : async (req, res) => {
+  getComplaints: async (req, res) => {
     try {
-      const complaints = await Complaint.find({}) ;
-      
-      
-      if(!complaints){
-        return res.status(404).json({message : "Complaints not found"}) ;
+      const complaints = await Complaint.find({});
+
+      if (!complaints) {
+        return res.status(404).json({ message: "Complaints not found" });
       }
 
-      return res.status(200).json({complaints : complaints}) ;
-    } catch (err){
+      return res.status(200).json({ complaints: complaints });
+    } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
-  }
+  },
 };
 
-module.exports = admin ;
+module.exports = admin;
