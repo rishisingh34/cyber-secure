@@ -18,6 +18,7 @@ router.post(
   Token.verifyAccessToken,
   complaintRegister.complainantDetails
 );
+router.post('/importantDocuments', Token.verifyAccessToken, upload.single("importantDocuments"), complaintRegister.importantDocuments); 
 
 
 module.exports = router ;

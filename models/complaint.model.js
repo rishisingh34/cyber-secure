@@ -55,9 +55,57 @@ const complaintSchema = new mongoose.Schema({
   nationalIdImageUrl : {
     type : String 
   },
-  importantDocumentsUrl : {
+  importantDocumentsUrl : [{
     type : String ,    
-  }
+  }],
+  policeVerification: {
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    dismissed: {
+      type: Boolean,
+      default: false,
+    },
+    dismissalReason: String,
+    verificationDateTime: Date,
+    verifyingOfficer: String,
+  },
+
+  actionTaken: {
+    status: {
+      type: String,
+      enum: ["Pending", "Sent to Bank", "Resolved"],
+      default: "Pending",
+    },
+    bankNotification: {
+      sent: {
+        type: Boolean,
+        default: false,
+      },
+      dateTimeSentToBank: Date,
+    },
+    bankDetails: {
+      name: String,
+      address: String,
+      contact: String,
+    },
+  },
+
+  timeline: [
+    {
+      timestamp: {
+        type: Date,
+        default: Date.now,
+      },
+      action: String,
+      details: String,
+    },
+  ],
+  nextSteps: {
+    userInstructions: String,
+    resolutionTimeframe: String,
+  },
 });
 
 module.exports = mongoose.model('Complaint', complaintSchema) ;

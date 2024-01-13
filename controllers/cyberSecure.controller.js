@@ -69,6 +69,33 @@ const complaintRegister = {
       consoel.error(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
+  },
+  importantDocuments : async (req, res) => {
+    try {
+      const filePath = req.file.path;
+      const cloudinaryResponse = await uploadOnCloudinary(filePath);
+
+      if (cloudinaryResponse.error || !cloudinaryResponse.secure_url) {
+        return res
+          .status(500)
+          .json({ message: "Failed to upload image to Cloudinary" });
+      }
+
+      const { acknowledgementNumber } = req.body;
+      const complaint = await Complaint.findOneAndUpdate(
+        { acknowledgementNumber: acknowledgementNumber },
+        { $push: { importantDocumentsUrl: cloudinaryResponse.secure_url } }
+      );
+
+      if (!complaint) {
+        return res.status(404).json({ message: "Complaint not found" });
+      }
+
+      return res.status(200).json({ message: "Complaint updated successfully" });
+    } catch(err) {
+      console.log(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 }
 
