@@ -13,10 +13,11 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 app.use(cookieParser()) ;
 app.use(express.json()) ;
 app.use(express.urlencoded({ extended: true })) ;
+app.use(handleCors);
 app.use('/v1', trendsRoutes) ;
 app.use('/v1/auth', authRoutes) ;
 app.use('/v1/admin', adminRoutes) ;
-app.use(handleCors) ;
+
 
 app.use('/gemini', async (req, res) => {
   try {
