@@ -7,8 +7,9 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    const decoded = await jwt.verify(token, ACCESS_TOKEN_SECRET);
-    req.admin  = decoded;
+    const decoded =jwt.verify(token, ACCESS_TOKEN_SECRET);
+    
+    req.adminId = decoded.aud;
     next();
   } catch (err) {
     console.error(err);

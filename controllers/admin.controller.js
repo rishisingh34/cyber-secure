@@ -57,7 +57,7 @@ const admin = {
         secure: true,
         sameSite: "none",
       });
-      
+
       return res.status(200).json({
         message: "User verified successfully",
         
@@ -87,11 +87,14 @@ const admin = {
   verifyComplaint : async (req,res) => {
     try {
       const { acknowledgementNumber , verificationStatus , dismissalStatus , dismissalReason, actionTaken, bankName, holderName, accountNumber , branch , freezeReason  } = req.body ; 
-      const adminId = req.admin.id ;  
-      const [admin, complaint] = await Promise.all([Admin.findById(adminId),Complaint.findOne({ acknowledgementNumber })]);
+      
+      const adminId = req.adminId ;  
+      
+      const admin = await Admin.findById(adminId);
+      const complaint = await Complaint.findOne({acknowledgementNumber}); 
 
       await Complaint.findByIdAndUpdate(
-        complaint._id,
+        complaint.id,
         {
           verificationStatus,
           dismissalStatus,
