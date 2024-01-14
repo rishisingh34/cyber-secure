@@ -52,10 +52,15 @@ const admin = {
       const accessToken = await Token.signAccessToken(admin.id);
 
       await OTP.deleteOne({ email });
-
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+      
       return res.status(200).json({
         message: "User verified successfully",
-        accessToken: accessToken,
+        
       });
     } catch (err) {
       console.error(err);

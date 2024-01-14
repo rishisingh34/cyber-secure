@@ -3,18 +3,18 @@ const {ACCESS_TOKEN_SECRET} = require('../config/env.config') ;
 
 const auth = async (req, res, next) => {
   try {
-    
-    const token = req.header("Authorization").replace("Bearer ", "");
+    const token = req.cookies.accessToken;
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized - Missing token" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
-    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);   
-    req.admin = decoded.aud;
+    const decoded = await jwt.verify(token, ACCESS_TOKEN_SECRET);
+    req.admin  = decoded;
     next();
-  } catch (error) {
-    console.error(error);
-    res.status(401).json({ message: "Unauthorized - Invalid token" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 module.exports = auth;
+
