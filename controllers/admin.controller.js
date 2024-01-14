@@ -31,7 +31,7 @@ const admin = {
 
       sendOtpMail(email, otp);
 
-      res.status(201).json({ message: "Otp Sent successfully" });
+      res.status(201).json({ message: "Otp Sent successfully" , email : admin.email });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
