@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { NEWS_API_KEY } = require("../config/env.config");
-const  CyberCrimeCategories  = require("../models/cyberCrimeCategories.model");
+const  CyberCrimeCategories  = require("../models/cyberCrimeCategories.model"); 
 
 const cyberCrimeInfo = {
   cyberTrends: async (req, res) => {
