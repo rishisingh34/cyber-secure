@@ -64,7 +64,11 @@ const admin = {
   },
   getComplaints: async (req, res) => {
     try {
-      const complaints = await Complaint.find({});
+      const complaints = await Complaint.find({}).populate(
+        "user",
+        "name email"
+      );
+
 
       if (!complaints) {
         return res.status(404).json({ message: "Complaints not found" });
