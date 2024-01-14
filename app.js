@@ -4,6 +4,7 @@ const { PORT } = require('./config/env.config') ;
 const connectDB = require('./config/db.config');
 const trendsRoutes = require('./routes/cyber_secure.route') ;
 const authRoutes = require('./routes/auth.route') ;
+const adminRoutes = require('./routes/admin.route'); 
 const handleCors = require("./config/cors.config");
 const cookieParser = require('cookie-parser') ;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
