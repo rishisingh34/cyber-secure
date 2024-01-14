@@ -21,7 +21,7 @@ const cyberCrimeInfo = {
   },
   cyberCrimeCategories : async (req, res) => {
     try {
-      const {category } = req.body;
+      const {category } = req.query ;
       const cyberCrimeCategories = await CyberCrimeCategories.findOne({category : category}) ;
 
       if(!cyberCrimeCategories){
