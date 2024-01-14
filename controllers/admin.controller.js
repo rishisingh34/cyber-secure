@@ -31,7 +31,7 @@ const admin = {
 
       sendOtpMail(email, otp);
 
-      res.status(201).json({ message: "Otp Sent successfully" , email : admin.email });
+      res.status(200).json({ message: "Otp Sent successfully" , email : admin.email });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
@@ -69,7 +69,6 @@ const admin = {
         "name email"
       );
 
-
       if (!complaints) {
         return res.status(404).json({ message: "Complaints not found" });
       }
@@ -80,6 +79,36 @@ const admin = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+  verifyComplaint : async (req,res) => {
+    try {
+      const { acknowledgementNumber , verificationStatus , dismissalStatus , dismissalReason, actionTaken, bankName, holderName, accountNumber , branch , freezeReason  } = req.body ; 
+      const adminId = req.admin.id ;  
+      const [admin, complaint] = await Promise.all([Admin.findById(adminId),Complaint.findOne({ acknowledgementNumber })]);
+
+      await Complaint.findByIdAndUpdate(
+        complaint._id,
+        {
+          verificationStatus,
+          dismissalStatus,
+          dismissalReason,
+          actionTaken,
+          "bankDetails.bankName": bankName,
+          "bankDetails.holderName": holderName,
+          "bankDetails.accountNumber": accountNumber,
+          "bankDetails.branch": branch,
+          "bankDetails.freezeReason": freezeReason,
+          verifyingOfficer : admin.name ,
+        },
+        { new: true }
+      );  
+
+      return res.status(200).json({message : "Police Verification process Completed"});
+
+    } catch(err){
+      console.log(err);
+      res.status(500).json({message : "Internal Server Error"}); 
+    }
+  }
 };
 
 module.exports = admin;

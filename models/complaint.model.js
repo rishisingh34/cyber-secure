@@ -1,111 +1,91 @@
 const mongoose = require('mongoose');
 
 const complaintSchema = new mongoose.Schema({
-  user : {
-    type : mongoose.Schema.Types.ObjectId ,
-    ref : 'User' ,
-    required : true ,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
-  acknowledgementNumber : {
-    type : String ,
-    required : true ,
+  acknowledgementNumber: {
+    type: String,
+    required: true,
   },
-  category : {
-    type : String ,
-  }, 
+  category: {
+    type: String,
+  },
   subcategory: {
-    type : String ,
-  }, 
-  date : {
-    type : String ,
-  } ,
-  time : {
-    type : String ,
+    type: String,
   },
-  delayReason : {
-    type : String ,
+  date: {
+    type: String,
   },
-  additionalInfo : {
-    type : String ,
+  time: {
+    type: String,
   },
-  name : {
-    type : String ,
+  delayReason: {
+    type: String,
   },
-  gender : {
-    type : String , 
+  additionalInfo: {
+    type: String,
   },
-  houseNo : {
-    type : String ,
+  name: {
+    type: String,
   },
-  country : {
-    type : String ,
+  gender: {
+    type: String,
   },
-  streetName : {
-    type : String ,
+  houseNo: {
+    type: String,
   },
-  state : {
-    type : String ,
+  country: {
+    type: String,
   },
-  district : {
-    type : String ,
+  streetName: {
+    type: String,
   },
-  nearestPoliceStation : {
-    type : String ,
-  }, 
-  nationalIdImageUrl : {
-    type : String 
+  state: {
+    type: String,
   },
-  importantDocumentsUrl : [{
-    type : String ,    
-  }],
-  policeVerification: {
-    verified: {
-      type: Boolean,
-      default: false,
-    },
-    dismissed: {
-      type: Boolean,
-      default: false,
-    },
-    dismissalReason: String,
-    verificationDateTime: Date,
-    verifyingOfficer: String,
+  district: {
+    type: String,
   },
-
-  actionTaken: {
-    status: {
-      type: String,
-      enum: ["Pending", "Sent to Bank", "Resolved"],
-      default: "Pending",
-    },
-    bankNotification: {
-      sent: {
-        type: Boolean,
-        default: false,
-      },
-      dateTimeSentToBank: Date,
-    },
-    bankDetails: {
-      name: String,
-      address: String,
-      contact: String,
-    },
+  nearestPoliceStation: {
+    type: String,
   },
-
-  timeline: [
+  nationalIdImageUrl: {
+    type: String,
+  },
+  importantDocumentsUrl: [
     {
-      timestamp: {
-        type: Date,
-        default: Date.now,
-      },
-      action: String,
-      details: String,
+      type: String,
     },
   ],
-  nextSteps: {
-    userInstructions: String,
-    resolutionTimeframe: String,
+  verificationStatus: {
+    type: Boolean,
+    default: false,
   },
+  dismissalStatus: {
+    type: Boolean,
+    default: false,
+  },
+  dismissalReason: {
+    type: String,
+  },
+  verifyingOfficer: {
+    type: String,
+  },
+  actionTaken: {
+    type: String,
+    enum: ["Pending", "Sent to Bank", "Resolved"],
+    default: "Pending",
+  },
+  bankDetails : {
+    bankName : String , 
+    holderName : String, 
+    accountNumber : String , 
+    branch : String ,
+    freezeReason : String , 
+  }
 });
 
 module.exports = mongoose.model('Complaint', complaintSchema) ;
