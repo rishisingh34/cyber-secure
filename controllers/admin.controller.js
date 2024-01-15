@@ -55,7 +55,6 @@ const admin = {
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
         sameSite: "none",
-        domain: "cyber-secure.onrender.com",
       });
 
 
