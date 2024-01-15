@@ -63,7 +63,7 @@ const admin = {
 
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        sameSite: sameSiteSetting,
+        sameSite: "none",
         secure: !isLocalhost, // Set secure to true unless it's localhost
       });
 
