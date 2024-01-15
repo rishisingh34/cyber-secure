@@ -28,7 +28,6 @@ const complaintRegister = {
   },
   complainantId : async (req, res) => {
     try {
-      
       const filePath = req.file.path; 
       const cloudinaryResponse = await uploadOnCloudinary(filePath);   
 
@@ -72,6 +71,7 @@ const complaintRegister = {
   },
   importantDocuments : async (req, res) => {
     try {
+
       const filePath = req.file.path;
       const cloudinaryResponse = await uploadOnCloudinary(filePath);
 

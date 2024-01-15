@@ -54,17 +54,18 @@ const admin = {
         return res.status(400).json({ message: "OTP is incorrect" });
       }
       const admin = await Admin.findOne({ email });
-      const accessToken = await Token.signAccessToken(admin.id);
+      const token = await Token.signAccessToken(admin.id);
 
       await OTP.deleteOne({ email });
       
       const isLocalhost = req.headers.origin === "http://localhost:5173";
-      const sameSiteSetting = isLocalhost ? "Lax" : "None";
+      // const sameSiteSetting = isLocalhost ? "Lax" : "None";
 
-      res.cookie("accessToken", accessToken, {
+      res.cookie("token", token, {
         httpOnly: true,
         sameSite: "none",
-        secure: !isLocalhost, // Set secure to true unless it's localhost
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        secure: true , 
       });
 
 

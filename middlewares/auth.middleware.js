@@ -3,7 +3,7 @@ const {ACCESS_TOKEN_SECRET} = require('../config/env.config') ;
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.cookies.accessToken;
+    const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
