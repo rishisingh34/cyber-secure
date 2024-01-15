@@ -54,7 +54,6 @@ const admin = {
       await OTP.deleteOne({ email });
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: true,
         sameSite: "none",
         domain: "cyber-secure.onrender.com",
       });
