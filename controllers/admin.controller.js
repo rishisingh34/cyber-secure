@@ -56,8 +56,9 @@ const admin = {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        domain : "https://cyber-secure.onrender.com"
+        domain: "cyber-secure.onrender.com",
       });
+
 
       return res.status(200).json({
         message: "User verified successfully",
