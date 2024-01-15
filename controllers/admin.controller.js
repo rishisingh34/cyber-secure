@@ -57,10 +57,14 @@ const admin = {
       const accessToken = await Token.signAccessToken(admin.id);
 
       await OTP.deleteOne({ email });
+      
+      const isLocalhost = req.headers.origin === "http://localhost:5173";
+      const sameSiteSetting = isLocalhost ? "Lax" : "None";
+
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        sameSite : "none",
-        secure : true 
+        sameSite: sameSiteSetting,
+        secure: !isLocalhost, // Set secure to true unless it's localhost
       });
 
 
