@@ -96,6 +96,31 @@ const complaintRegister = {
       console.log(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
+  },
+  getActiveComplaints : async (req, res) => {
+    try {
+      
+      const complaints = await Complaint.find({user : req.user.id , $or : [{actionTaken : "Pending"},{actionTaken : "Sent to Bank"}]}) ;
+      if(!complaints){
+        return res.status(404).json({message : "Complaints not found"}) ;
+      }
+      return res.status(200).json({complaints : complaints}) ;
+    } catch(err) {
+      console.log(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
+  getResolvedComplaints : async (req, res) => {
+    try {
+      const complaints = await Complaint.find({user : req.user.id , actionTaken : "Resolved"}) ;
+      if(!complaints){
+        return res.status(404).json({message : "Complaints not found"}) ;
+      }
+      return res.status(200).json({complaints : complaints}) ;
+    } catch(err) {
+      console.log(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 }
 

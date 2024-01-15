@@ -19,6 +19,7 @@ router.post(
   complaintRegister.complainantDetails
 );
 router.post('/importantDocuments', Token.verifyAccessToken, upload.single("importantDocuments"), complaintRegister.importantDocuments); 
-
+router.get('/getActiveComplaints', Token.verifyAccessToken, complaintRegister.getActiveComplaints) ;
+router.get('/getResolvedComplaints', Token.verifyAccessToken, complaintRegister.getResolvedComplaints) ;
 
 module.exports = router ;
