@@ -28,8 +28,9 @@ const complaintRegister = {
   },
   complainantId : async (req, res) => {
     try {
-      const filePath = req.file.path; 
-      const cloudinaryResponse = await uploadOnCloudinary(filePath);   
+      const b64 = Buffer.from(req.file.buffer).toString("base64");
+      let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+      const cloudinaryResponse = await uploadOnCloudinary(dataURI);   
 
       if (cloudinaryResponse.error || !cloudinaryResponse.secure_url) {
         return res

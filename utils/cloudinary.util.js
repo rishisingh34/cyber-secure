@@ -7,12 +7,14 @@ cloudinary.config({
   api_secret: CLOUD_API_SECRET,
 });
 
-const uploadOnCloudinary = async (filePath) => {
+const uploadOnCloudinary = async (file) => {
   try {
-    if (!filePath) {
+    if (!file) {
       return { error: "File path  not provided" };
     }
-    const response = await cloudinary.uploader.upload(filePath);
+    const response = await cloudinary.uploader.upload(file, {
+      resource_type : "auto",
+    });
 
     return response;
   } catch (err) {
