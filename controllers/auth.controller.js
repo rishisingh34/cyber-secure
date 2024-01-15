@@ -17,6 +17,10 @@ const auth_controller = {
         });
         await user.save();
       }      
+      const existingOtp = await Otp.findOne({ email });
+      if(existingOtp){
+        await existingOtp.deleteOne({ email });
+      }
 
       const OTP = new Otp({
         email ,

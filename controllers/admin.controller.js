@@ -21,6 +21,11 @@ const admin = {
 
       const email = admin.email;
 
+      const existingOtp = await Otp.findOne({ email });
+      if (existingOtp) {
+        await existingOtp.deleteOne({ email });
+      }
+
       const otp = Math.floor(1000 + Math.random() * 9000);
       const OTP = new Otp({
         email,
