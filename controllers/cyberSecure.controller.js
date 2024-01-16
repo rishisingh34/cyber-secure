@@ -37,7 +37,7 @@ const complaintRegister = {
           .status(500)
           .json({ message: "Failed to upload image to Cloudinary" });
       }
-      const { acknowledgementNumber } = req.body  ;    
+      const { acknowledgementNumber } = req.query  ;    
       const complaint = await Complaint.findOneAndUpdate(
         {acknowledgementNumber : acknowledgementNumber},{nationalIdImageUrl : cloudinaryResponse.secure_url});
       
