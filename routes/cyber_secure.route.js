@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const cyberCrimeInfo = require('../controllers/cyberTrends.controller');
-const complaintRegister = require('../controllers/cyberSecure.controller');
+const {complaintRegister, getCases} = require('../controllers/cyberSecure.controller');
 const Token = require('../middlewares/token.middleware');
 const upload = require("../middlewares/multer.middleware");
 
@@ -21,5 +21,6 @@ router.post(
 router.post('/importantDocuments', Token.verifyAccessToken, upload.single("importantDocuments"), complaintRegister.importantDocuments); 
 router.get('/getActiveComplaints', Token.verifyAccessToken, complaintRegister.getActiveComplaints) ;
 router.get('/getResolvedComplaints', Token.verifyAccessToken, complaintRegister.getResolvedComplaints) ;
+router.get('/getCases', Token.verifyAccessToken, getCases ); 
 
 module.exports = router ;

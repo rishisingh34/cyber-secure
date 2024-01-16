@@ -76,7 +76,6 @@ const complaintSchema = new mongoose.Schema({
   },
   actionTaken: {
     type: String,
-    enum: ["Pending", "Sent to Bank and Resolved", "Dismissed"],
     default: "Pending",
   },
   bankDetails : {

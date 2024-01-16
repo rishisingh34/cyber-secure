@@ -2,7 +2,7 @@ const mailer = require("nodemailer");
 const { EMAIL, PASS } = require("../config/env.config");
 
 
-const sendOtpMail = async (email, otp, subject) => {
+const sendOtpMail = async (email, otp) => {
   const transporter = mailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -15,7 +15,7 @@ const sendOtpMail = async (email, otp, subject) => {
   const mailOptions = {
     from: EMAIL,
     to: email,
-    subject: subject,
+    subject: "Email for OTP verification" ,
     html: `<p style="font-size: 16px;>Thank you for using our service. To verify your identity, we have sent you a 
        an OTP.
       </p>
@@ -30,7 +30,7 @@ const sendOtpMail = async (email, otp, subject) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Email Sent : " + info.response);
+      // console.log("Email Sent : " + info.response);
     }
   });
 };

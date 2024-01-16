@@ -71,7 +71,7 @@ const admin = {
 
       return res.status(200).json({
         message: "User verified successfully",
-        
+        admin : admin 
       });
     } catch (err) {
       console.error(err);

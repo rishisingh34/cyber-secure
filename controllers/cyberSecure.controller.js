@@ -82,7 +82,7 @@ const complaintRegister = {
           .json({ message: "Failed to upload image to Cloudinary" });
       }
 
-      const { acknowledgementNumber } = req.body;
+      const { acknowledgementNumber } = req.query ;
       const complaint = await Complaint.findOneAndUpdate(
         { acknowledgementNumber: acknowledgementNumber },
         { $push: { importantDocumentsUrl: cloudinaryResponse.secure_url } }
@@ -122,7 +122,22 @@ const complaintRegister = {
       console.log(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
+  },
+}
+
+async function getCases (req, res){
+  try {
+    const userId = req.user.id;
+    const complaints = await Complaint.find({ user: userId });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ complaints: complaints });
+  } catch (err) {
+    console.log(err);
+    res.status.json({ message: "Internal Server Error " });
   }
 }
 
-module.exports = complaintRegister;
+module.exports = {complaintRegister, getCases};
