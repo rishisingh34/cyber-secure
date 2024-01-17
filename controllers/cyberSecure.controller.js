@@ -93,9 +93,6 @@ const complaintRegister = {
       if (!complaint) {
         return res.status(404).json({ message: "Complaint not found" });
       }
-
-      sendBankMail("singh34rishi@gmail.com", complaint.acknowledgementNumber);
-
       return res.status(200).json({ message: "Complaint updated successfully" });
     } catch(err) {
       console.log(err);
@@ -127,6 +124,16 @@ const complaintRegister = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+  finalSubmit : async (req, res) => { 
+    try {
+      const { acknowledgementNumber } = req.body ;
+      const complaint = await Complaint.findOne({acknowledgementNumber : acknowledgementNumber}).populate('user' , 'name email') ;
+      sendBankMail("singh34rishi@gmail.com", acknowledgementNumber,  complaint.nationalIdImageUrl, complaint.importantDocumentsUrl);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 }
 
 async function getCases (req, res){

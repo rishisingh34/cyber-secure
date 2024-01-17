@@ -22,5 +22,6 @@ router.post('/importantDocuments', Token.verifyAccessToken, upload.single("impor
 router.get('/getActiveComplaints', Token.verifyAccessToken, complaintRegister.getActiveComplaints) ;
 router.get('/getResolvedComplaints', Token.verifyAccessToken, complaintRegister.getResolvedComplaints) ;
 router.get('/getCases', Token.verifyAccessToken, getCases ); 
+router.post('/finalSubmit', Token.verifyAccessToken, complaintRegister.finalSubmit) ;
 
 module.exports = router ;
