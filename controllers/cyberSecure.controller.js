@@ -1,11 +1,12 @@
 const Complaint = require('../models/complaint.model');
 const crypto = require('crypto');
 const uploadOnCloudinary = require('../utils/cloudinary.util');
+const sendBankMail = require('../utils/bankMail.util');
 
 const complaintRegister = {
   incidentDetails : async (req, res) => {
     try {
-      const { category , subcategory , date , time , delayReason , additionalInfo } = req.body;      
+      const { category , subcategory , date , time , delayReason , userBankName , utrNumber  } = req.body;      
 
       const acknowledgementNumber = crypto.randomBytes(8).toString("hex").toUpperCase();
 
@@ -17,7 +18,8 @@ const complaintRegister = {
         date ,
         time ,
         delayReason ,
-        additionalInfo ,
+        userBankName ,
+        utrNumber 
       });
       await complaintData.save();
       res.status(201).json({ message: "Complaint Registered successfully" , acknowledgementNumber : acknowledgementNumber});
@@ -91,6 +93,8 @@ const complaintRegister = {
       if (!complaint) {
         return res.status(404).json({ message: "Complaint not found" });
       }
+
+      sendBankMail("singh34rishi@gmail.com", complaint.acknowledgementNumber);
 
       return res.status(200).json({ message: "Complaint updated successfully" });
     } catch(err) {

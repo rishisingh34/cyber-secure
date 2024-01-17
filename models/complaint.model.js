@@ -78,13 +78,12 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     default: "Pending",
   },
-  bankDetails : {
-    bankName : String , 
-    holderName : String, 
-    accountNumber : String , 
-    branch : String ,
-    freezeReason : String , 
-  }
+  userBankName : {
+    type : String
+  },
+  utrNumber : {
+    type : String
+  },
 });
 
 module.exports = mongoose.model('Complaint', complaintSchema) ;
