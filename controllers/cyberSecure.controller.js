@@ -135,22 +135,23 @@ const complaintRegister = {
       console.log(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
-  }
-}
+  },
+  getCases : async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const complaints = await Complaint.findOne({ user: userId });
+      if (!complaints) {
+        return res.status(404).json({ message: "Complaint not found" });
+      }
 
-async function getCases (req, res){
-  try {
-    const userId = req.user.id;
-    const complaints = await Complaint.find({ user: userId });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(200).json({ complaints: complaints });
+    } catch (err) {
+      console.log(err);
+      res.status.json({ message: "Internal Server Error " });
     }
-
-    return res.status(200).json({ complaints: complaints });
-  } catch (err) {
-    console.log(err);
-    res.status.json({ message: "Internal Server Error " });
   }
 }
 
-module.exports = {complaintRegister, getCases};
+
+
+module.exports = {complaintRegister};

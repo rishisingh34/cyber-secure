@@ -24,8 +24,8 @@ const sendBankMail = async (
     )
     .join("");
 
-  const freezeLink = `https://cyber-secure.onrender.com/v1/bank/freeze?acknowledgementNumber=${acknowledgementNumber}`;
-  const denyLink = `https://cyber-secure.onrender.com/v1/bank/deny?acknowledgementNumber=${acknowledgementNumber}`;
+  const freezeLink = `http://localhost:5000/v1/bank/freeze?acknowledgementNumber=${acknowledgementNumber}`;
+  const denyLink = `http://localhost:5000/v1/bank/deny?acknowledgementNumber=${acknowledgementNumber}`;
 
   const noticeHtml = `
     <center><h1 style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color: red;">Notice</h1></center>

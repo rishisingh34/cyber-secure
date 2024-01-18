@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser') ;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
-
+app.set('view engine', 'ejs') ;
 app.use(cookieParser()) ;
 app.use(express.json()) ;
 app.use(express.urlencoded({ extended: true })) ;
