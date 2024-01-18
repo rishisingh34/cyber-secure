@@ -74,10 +74,10 @@ const complaintRegister = {
   },
   importantDocuments : async (req, res) => {
     try {
-
-      const filePath = req.file.path;
-      const cloudinaryResponse = await uploadOnCloudinary(filePath);
-
+      const b64 = Buffer.from(req.file.buffer).toString("base64");
+      let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+      const cloudinaryResponse = await uploadOnCloudinary(dataURI);   
+      
       if (cloudinaryResponse.error || !cloudinaryResponse.secure_url) {
         return res
           .status(500)
@@ -129,6 +129,8 @@ const complaintRegister = {
       const { acknowledgementNumber } = req.body ;
       const complaint = await Complaint.findOne({acknowledgementNumber : acknowledgementNumber}).populate('user' , 'name email') ;
       sendBankMail("singh34rishi@gmail.com", acknowledgementNumber,  complaint.nationalIdImageUrl, complaint.importantDocumentsUrl);
+
+      return res.status(200).json({message : "Complaint submitted successfully and sent to bank for verification"}) ;
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Internal Server Error" });

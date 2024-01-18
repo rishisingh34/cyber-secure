@@ -1,7 +1,12 @@
 const mailer = require("nodemailer");
 const { EMAIL, PASS } = require("../config/env.config");
 
-const sendBankMail = async (email,acknowledgementNumber, userImageUrl , evidenceImageUrl) => {
+const sendBankMail = async (
+  email,
+  acknowledgementNumber,
+  userImageUrl,
+  evidenceImageUrls
+) => {
   const transporter = mailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -12,37 +17,31 @@ const sendBankMail = async (email,acknowledgementNumber, userImageUrl , evidence
     },
   });
 
+  const evidenceImagesHtml = evidenceImageUrls
+    .map(
+      (url) =>
+        `<img src="${url}" alt="Evidence Image" style="max-height : 20vh; margin-right: 10px; height : auto " />`
+    )
+    .join("");
+
   const noticeHtml = `
-    <p>Dear Bank,</p>
-    <p>We have received a request to freeze the bank account related to a case with Acknowledgement Number : ${acknowledgementNumber} Please review the details below:</p>
-    <p><strong>User Information:</strong></p>
-    <img src="${userImageUrl}" alt="User Image" style="max-width: 100%;" />
-    <p><strong>Evidence:</strong></p>
-    <img src="${evidenceImageUrl}" alt="Evidence Image" style="max-width: 100%;" />
-    <p>This request requires your attention within 24 hours.</p>
-    <p>Please take one of the following actions:</p>
-    <button onclick="freezeAccount()">Freeze Account</button>
-    <button onclick="denyRequest()">Deny Request</button>
-    <div id="denyReason" style="display:none;">
-      <p>Please provide a reason for denial:</p>
-      <textarea id="denialReason" rows="4" cols="50"></textarea>
-      <button onclick="submitDenialReason()">Submit</button>
+    <center><h1 style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color: red;">Notice</h1></center>
+    <p style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: larger;">We are writing to bring to your attention a matter of utmost urgency. A case with <span style="font-weight: 700; background-color: rgb(229, 255, 0);">Acknowledgement Number: ${acknowledgementNumber}</span> has been filed, and we request your prompt attention to freeze the associated bank account.</p>
+    <div style="margin: 1rem; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: larger; ">
+      User Information: <br>
+      <img src="${userImageUrl}" alt="">
+    </div><br><br>
+    <div style="margin: 1rem; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: larger;">
+      Evidence: <br>
+      <div style="display: flex; gap : 20px flex-wrap : wrap">
+        ${evidenceImagesHtml}
+      </div>
     </div>
-    <script>
-      function freezeAccount() {
-        // redirect to verify 
-      }
-
-      function denyRequest() {
-        document.getElementById("denyReason").style.display = "block";
-      }
-
-      function submitDenialReason() {
-        const denialReason = document.getElementById("denialReason").value;
-        // Implement logic to handle denial reason submission
-        alert("Denial Reason Submitted: " + denialReason);
-      }
-    </script>
+    <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: larger;">
+      This request demands your immediate review within the next 24 hours. Failure to take appropriate action within this timeframe may result in severe consequences, including legal penalties.
+    </div>
+    <button style="margin: 2rem; background: rgb(114, 114, 242); padding: 0.7rem; border: none; border-radius: 4px; color: white; font-size: larger;">Freeze</button>
+    <button style="margin: 2rem; background: rgb(220, 48, 5); padding: 0.7rem; border: none; border-radius: 4px; color: white; font-size: larger;">Deny</button>
   `;
 
   const mailOptions = {
@@ -61,4 +60,4 @@ const sendBankMail = async (email,acknowledgementNumber, userImageUrl , evidence
   });
 };
 
-module.exports = { sendBankMail };
+module.exports = sendBankMail;

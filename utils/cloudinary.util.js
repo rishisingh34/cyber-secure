@@ -1,5 +1,9 @@
 const cloudinary = require("cloudinary").v2;
-const { CLOUD_NAME , CLOUD_API_SECRET, CLOUD_API_KEY } = require("../config/env.config");
+const {
+  CLOUD_NAME,
+  CLOUD_API_SECRET,
+  CLOUD_API_KEY,
+} = require("../config/env.config");
 
 cloudinary.config({
   cloud_name: CLOUD_NAME,
@@ -13,7 +17,7 @@ const uploadOnCloudinary = async (file) => {
       return { error: "File path  not provided" };
     }
     const response = await cloudinary.uploader.upload(file, {
-      resource_type : "auto",
+      resource_type: "auto",
     });
 
     return response;
