@@ -1,13 +1,13 @@
 const Admin = require("../models/admin.model");
 const Complaint = require("../models/complaint.model");
-const Otp = require("../models/otp.model");
+const Otp = require("../models/adminOtp.model");
 const { sendOtpMail } = require("../utils/mailer.util");
 const Token = require("../middlewares/token.middleware");
 
 const admin = {
   login: async (req, res) => {
     try {
-      const { name, designation, identificationNumber, issuedDate } = req.body;
+      const { name, designation, identificationNumber } = req.body;
       
       const admin = await Admin.findOne({ identificationNumber });
 
@@ -60,7 +60,7 @@ const admin = {
 
       await OTP.deleteOne({ email });
 
-      const isLocalhost = req.headers.origin === "http://localhost:5173";
+      // const isLocalhost = req.headers.origin === "http://localhost:5173";
       // const sameSiteSetting = isLocalhost ? "Lax" : "None";
 
       res.cookie("token", token, {
